@@ -90,7 +90,7 @@
 
                 if($file_erro == 0 )
                 {
-                    $part = "E:/Xam/htdocs/WebBanSach/public/admin/img/";
+                    $part = "E:/Xam/htdocs/BanSach/public/admin/img/";
                     $data['avatar'] = $file_name;
                 } 
                 _debug($file_tmp);
@@ -232,7 +232,7 @@
                             <?php echo $error['avatar']; unset($error['avatar']); ?> 
                         </div>
                         <?php endif; ?>
-                        <img src="/WebBanSach/public/admin/img/<?php echo$Editadmin['avatar'] ?>" width="50px" height="50px">
+                        <img src="/BanSach/public/admin/img/<?php echo$Editadmin['avatar'] ?>" width="50px" height="50px">
                     </div>
                     
                     <button type="submit" class="btn btn-primary">Gửi</button>

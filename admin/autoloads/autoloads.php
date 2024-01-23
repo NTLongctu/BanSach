@@ -6,8 +6,8 @@
 
 	if(!isset($_SESSION['admin_id'])
 	{
-		header("location: /WebBanSach/login/");
+		header("location: /BanSach/login/");
 	}
 
-	define("ROOT",$_SERVER['DOCUMENT_ROOT']."/WebBanSach/public/uploads/");
+	define("ROOT",$_SERVER['DOCUMENT_ROOT']."/BanSach/public/uploads/");
 ?>

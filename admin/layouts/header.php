@@ -75,11 +75,11 @@
   <title>Trang quản trị</title>
 
   <!-- Custom fonts for this template-->
-  <link href="/WebBanSach/public/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/BanSach/public/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <!--<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">-->
 
   <!-- Custom styles for this template-->
-  <link href="/WebBanSach/public/admin/css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="/BanSach/public/admin/css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -92,7 +92,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="i/WebBanSach/admin/">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="i/BanSach/admin/">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -104,7 +104,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="/WebBanSach/admin/">
+        <a class="nav-link" href="/BanSach/admin/">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Bảng điều khiển</span></a>
       </li>
@@ -155,7 +155,7 @@
           <span>Quản lý người dùng</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/WebBanSach/admin/modules/admin/index.php">
+        <a class="nav-link" href="/BanSach/admin/modules/admin/index.php">
           <i class="fas fa-fw fa-user"></i>
           <span>Quản lý nhân viên</span></a>
       </li>
@@ -171,7 +171,7 @@
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="/WebBanSach/admin/">
+        <a class="nav-link" href="/BanSach/admin/">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Thống kê</span></a>
       </li>
@@ -254,7 +254,7 @@
                 </h6>
                 <?php foreach ($hdcxy as $item) : ?>
                   <?php if($item['status']==0) :?>
-                  <a class="dropdown-item d-flex align-items-center" href="/WebBanSach/admin/modules/hoadon/index.php">
+                  <a class="dropdown-item d-flex align-items-center" href="/BanSach/admin/modules/hoadon/index.php">
                     <div class="mr-3">
                       <div class="icon-circle bg-primary">
                         <i class="fas fa-file-alt text-white"></i>
@@ -286,9 +286,9 @@
                 </h6>
                 <?php foreach( $messagesss as $item) :?>
                   <?php if( $item['status']==0) :?>
-                    <a class="dropdown-item d-flex align-items-center" href="/WebBanSach/admin/modules/contact/status.php?id=<?php echo$item['id'] ?>">
+                    <a class="dropdown-item d-flex align-items-center" href="/BanSach/admin/modules/contact/status.php?id=<?php echo$item['id'] ?>">
                       <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="/WebBanSach/public/admin/img/<?php echo $item['avataruser'] ?>" alt="">
+                        <img class="rounded-circle" src="/BanSach/public/admin/img/<?php echo $item['avataruser'] ?>" alt="">
                         <div class="status-indicator bg-success"></div>
                       </div>
                       <div class="font-weight-bold">
@@ -309,7 +309,7 @@
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo$_SESSION['admin_name'] ?></span>
-                <img class="img-profile rounded-circle" src="/WebBanSach/public/admin/img/<?php echo $_SESSION['admin_avatar']?>">
+                <img class="img-profile rounded-circle" src="/BanSach/public/admin/img/<?php echo $_SESSION['admin_avatar']?>">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -325,13 +325,13 @@
                   <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                   Hoạt động đăng nhập
                 </a>
-                <!--<a class="dropdown-item" href="/WebBanSach/admin/login.php">
+                <!--<a class="dropdown-item" href="/BanSach/admin/login.php">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Đăng nhập
                 </a>
                 -->
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/WebBanSach/login/dangxuat.php" >
+                <a class="dropdown-item" href="/BanSach/login/dangxuat.php" >
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Đăng xuất
                 </a>

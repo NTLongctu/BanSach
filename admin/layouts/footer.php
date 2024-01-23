@@ -39,21 +39,21 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script src="/WebBanSach/public/admin/vendor/jquery/jquery.min.js"></script>
-<script src="/WebBanSach/public/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/BanSach/public/admin/vendor/jquery/jquery.min.js"></script>
+<script src="/BanSach/public/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
-<script src="/WebBanSach/public/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="/BanSach/public/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="/WebBanSach/public/admin/js/sb-admin-2.min.js"></script>
+<script src="/BanSach/public/admin/js/sb-admin-2.min.js"></script>
 
 <!-- Page level plugins -->
-<script src="/WebBanSach/public/admin/vendor/chart.js/Chart.min.js"></script>
+<script src="/BanSach/public/admin/vendor/chart.js/Chart.min.js"></script>
 
 <!-- Page level custom scripts -->
-<!--<script src="/WebBanSach/public/admin/js/demo/chart-area-demo.js"></script>-->
-<!--<script src="/WebBanSach/public/admin/js/demo/chart-pie-demo.js"></script>-->
+<!--<script src="/BanSach/public/admin/js/demo/chart-area-demo.js"></script>-->
+<!--<script src="/BanSach/public/admin/js/demo/chart-pie-demo.js"></script>-->
 <?php 
     /*$sqlthang1 = " SELECT MONTH(ngaylap) as thang ,tongtien FROM hd  ";
     $t = $db->fetchsql($sqlthang1);

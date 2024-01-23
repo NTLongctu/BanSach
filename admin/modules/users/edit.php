@@ -1,7 +1,14 @@
 <?php
-    $open = "admin";
+    $open = "users";
     require_once ("../../autoload/autoload.php");
-    $admin = $db->fetchALL("admin");
+    $id = intval(getInput('id'));
+    $Editadmin = $db->fetchID("users",$id);
+    if(empty($Editadmin))
+    {
+        $_SESSION['error'] = "Dữ liệu tồn tại! ";
+        redirectAdmin("users");
+    }
+    $users = $db->fetchAll("users");
     if($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $error = [];
@@ -11,24 +18,30 @@
         }
         else
         {
-            $is_check = $db->fetchOne("admin", "username = '".$admin['username']."'");
-            if($is_check != NULL)
-                 $error['Email'] = "username đã được sử dụng!";
+            if(postInput('username') != $Editadmin['username'])
+            {
+                $is_check = $db->fetchOne("users", "username ='".$users['username']."'");
+                if($is_check != NULL)
+                {
+                    $error['username'] = "username đã được sử dụng hãy nhập username khác!";
+                }
+            }
         }
-        $pass ='';
         if(postInput('password')=='')
         {
             $error['password'] = "Hãy nhập password!";
         }
-        $pass = md5(postInput('password'));
+        
         if(postInput('name')=='')
         {
             $error['name'] = "Hãy nhập tên!";
         }
+        
         if(postInput('Email')=='')
         {
             $error['Email'] = "Hãy nhập email!";
         }
+        
         if(postInput('phone')=='')
         {
             $error['phone'] = "Hãy nhập số điện thoại!";
@@ -41,6 +54,18 @@
         {
             $error['avatar'] = "Bạn chưa chọn hình!";
         }
+        $pass='';
+        if(postInput('password') != NULL && postInput('re_password') != NULL )
+        {
+            if(postInput('password') != postInput('re_password'))
+            {
+                $error['re_password'] = "Nhập lại password không khớp!";
+            }
+            else
+            {
+                $pass = md5(postInput('password'));
+            }
+        }
         if(empty($error))
         {
 
@@ -52,11 +77,10 @@
                 "email" => postInput('Email'),
                 "phone"=>postInput('phone'),
                 "address" =>postInput('address'),
-                "avatar" => postInput('avatar')
                 
 
             ];
-             if(isset($_FILES['avatar']))
+            if(isset($_FILES['avatar']))
             {
                 $file_name = $_FILES['avatar']['name'];
                 $file_tmp = $_FILES['avatar']['tmp_name'];
@@ -65,21 +89,21 @@
 
                 if($file_erro == 0 )
                 {
-                    $part = "E:/Xam/htdocs/BanSach/public/admin/img/";
+                    $part = ROOT."img/";
                     $data['avatar'] = $file_name;
                 }
             }
-            $id_insert = $db->insert("admin",$data);
-            if($id_insert)
+            
+            $id_update = $db->update("users",$data,array("id"=>$id));
+            if($id_insert >0)
             {
-                move_uploaded_file($file_tmp,$part.$file_name);
-                $_SESSION['success']= "Thêm mới thành công!";
-                redirectAdmin("admin");
+                $_SESSION['success']= "Cập nhật thành công!";
+                redirectAdmin("users");
             }
             else
             {
-                $_SESSION['error'] = "Thêm mới thất bại! ";
-                redirectAdmin("admin");
+                $_SESSION['error'] = "Cập nhật thất bại! ";
+                redirectAdmin("users");
 
             }
         }
@@ -124,29 +148,40 @@
                     
                 </div>
                 <div class="col-md-8">
+
                     <div class="form-group">
                         <label >Hãy nhập username :</label>
-                        <input type="text" class="form-control"  placeholder="Nhập username"  name='username'>
-                        <?php if(isset($error['name'])) : ?>
+                        <input type="text" class="form-control"  placeholder="Nhập username"  name='username' value="<?php echo$Editadmin['username'] ?>">
+                        <?php if(isset($error['username'])) : ?>
                         <div class="alert alert-danger alert-dismissable"> 
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                            <?php echo $error['name']; unset($error['name']); ?> 
+                            <?php echo $error['username']; unset($error['username']); ?> 
                         </div>
                         <?php endif; ?>
                     </div>
                     <div class="form-group">
                         <label >Password:</label>
-                        <input type="password" class="form-control"  placeholder="Nhập password" name='password'>
-                        <?php if(isset($error['gia'])) : ?>
+                        <input type="password" class="form-control"  placeholder="Nhập password" name='password' value="<?php echo $Editadmin['password'] ?>">
+                        <?php if(isset($error['password'])) : ?>
                         <div class="alert alert-danger alert-dismissable"> 
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                            <?php echo $error['gia']; unset($error['gia']); ?> 
+                            <?php echo $error['password']; unset($error['password']); ?> 
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="form-group">
+                        <label >Nhập lại password:</label>
+                        <input type="password" class="form-control"  placeholder="Nhập password" name='re_password' >
+                        <?php if(isset($error['re_password'])) : ?>
+                        <div class="alert alert-danger alert-dismissable"> 
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <?php echo $error['re_password']; unset($error['re_password']); ?> 
                         </div>
                         <?php endif; ?>
                     </div>
                     <div class="form-group">
                         <label >Tên :</label>
-                        <input type="text" class="form-control"  placeholder="Nhập tên!" name='name'>
+                        <input type="text" class="form-control"  placeholder="Nhập tên!" name='name' value="<?php echo$Editadmin['name'] ?>">
                         <?php if(isset($error['name'])) : ?>
                         <div class="alert alert-danger alert-dismissable"> 
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -157,7 +192,7 @@
                     
                     <div class="form-group">
                         <label >Email:</label>
-                        <input type="email" class="form-control"  placeholder="Nhập Email" name='Email'>
+                        <input type="email" class="form-control"  placeholder="Nhập Email" name='Email' value="<?php echo$Editadmin['email'] ?>">
                         <?php if(isset($error['Email'])) : ?>
                         <div class="alert alert-danger alert-dismissable"> 
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -167,7 +202,7 @@
                     </div>
                     <div class="form-group">
                         <label >Số điện thoại:</label>
-                        <input type="number" class="form-control"  placeholder="Nhập số điện thoại." name='phone'>
+                        <input type="number" class="form-control"  placeholder="Nhập số điện thoại." name='phone' value="<?php echo$Editadmin['phone'] ?>">
                         <?php if(isset($error['phone'])) : ?>
                         <div class="alert alert-danger alert-dismissable"> 
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -177,7 +212,7 @@
                     </div>
                     <div class="form-group">
                         <label >Địa chỉ:</label>
-                        <input type="munber" class="form-control"  placeholder="Nhập số điện thoại." name='address'>
+                        <input type="munber" class="form-control"  placeholder="Nhập số điện thoại." name='address' value="<?php echo$Editadmin['address'] ?>">
                         <?php if(isset($error['address'])) : ?>
                         <div class="alert alert-danger alert-dismissable"> 
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -194,6 +229,7 @@
                             <?php echo $error['avatar']; unset($error['avatar']); ?> 
                         </div>
                         <?php endif; ?>
+                        <img src="/BanSach/public/admin/img/<?php echo$Editadmin['avatar'] ?>" width="50px" height="50px">
                     </div>
                     
                     <button type="submit" class="btn btn-primary">Gửi</button>

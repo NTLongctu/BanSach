@@ -1,7 +1,7 @@
 <?php
-    $open = "admin";
+    $open = "users";
     require_once ("../../autoload/autoload.php");
-    $admin = $db->fetchALL("admin");
+    $users = $db->fetchALL("users");
     if($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $error = [];
@@ -11,9 +11,9 @@
         }
         else
         {
-            $is_check = $db->fetchOne("admin", "username = '".$admin['username']."'");
+            $is_check = $db->fetchOne("users", "username = '".$users['username']."'");
             if($is_check != NULL)
-                 $error['Email'] = "username đã được sử dụng!";
+                 $error['username'] = "username đã được sử dụng!";
         }
         $pass ='';
         if(postInput('password')=='')
@@ -65,21 +65,20 @@
 
                 if($file_erro == 0 )
                 {
-                    $part = "E:/Xam/htdocs/BanSach/public/admin/img/";
+                    $part = ROOT."img/";
                     $data['avatar'] = $file_name;
                 }
             }
-            $id_insert = $db->insert("admin",$data);
+            $id_insert = $db->insert("users",$data);
             if($id_insert)
             {
-                move_uploaded_file($file_tmp,$part.$file_name);
                 $_SESSION['success']= "Thêm mới thành công!";
-                redirectAdmin("admin");
+                redirectAdmin("users");
             }
             else
             {
                 $_SESSION['error'] = "Thêm mới thất bại! ";
-                redirectAdmin("admin");
+                redirectAdmin("users");
 
             }
         }
@@ -93,7 +92,7 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Đây là trang quản trị của admin</h1>
+            <h1 class="h3 mb-0 text-gray-800">Đây là trang quản trị của users</h1>
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
           </div>
           <!-- Content Row -->
@@ -177,7 +176,7 @@
                     </div>
                     <div class="form-group">
                         <label >Địa chỉ:</label>
-                        <input type="munber" class="form-control"  placeholder="Nhập số điện thoại." name='address'>
+                        <input type="munber" class="form-control"  placeholder="Địa chỉ." name='address'>
                         <?php if(isset($error['address'])) : ?>
                         <div class="alert alert-danger alert-dismissable"> 
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -202,8 +201,7 @@
             </div>
         </div>
         <div class="container-fluid">       
-        </div>
-                
+        </div>      
     </form>
 </div>
 

@@ -1,6 +1,8 @@
 <?php
-    $open = "admin";
+    $open = "product";
     require_once ("../../autoload/autoload.php");
+    $product = $db->fetchALL("product");
+
     if(isset($_GET['page']))
     {
         $p=$_GET['page'];
@@ -9,16 +11,18 @@
     {
         $p=1;
     }
-    $sql = "SELECT admin.* FROM admin";
+    $sqlcategory = "SELECT product.*,category.name as namecate, tacgia.name as nametacgia, nxb.name as namenxb,cotyphathanh.name as namecongty  FROM product
+                    LEFT JOIN category on category.id = product.category_id LEFT JOIN tacgia on tacgia.id = product.id_tacgia LEFT JOIN nxb on nxb.id = product.id_nxb
+                    LEFT JOIN cotyphathanh on cotyphathanh.id = product.id_cotyphathanh";
 
-    $admin = $db->fetchJone('admin',$sql,$p,2,true);
-    if(isset($admin['page']))
+    $product = $db->fetchJone('product',$sqlcategory,$p,4,true);
+    if(isset($product['page']))
     {
-        $sotrang= $admin['page'];
-        unset($admin['page']);
+        $sotrang= $product['page'];
+        unset($product['page']);
     }
-    
 ?>
+
 <!--header-->
 <?php require_once ("../../layouts/header.php"); ?>
         <!-- Begin Page Content -->
@@ -30,25 +34,27 @@
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
           </div>
           <!-- Content Row -->
+          <!-- Content Row -->
+          <!-- Content Row -->
 </div>
         <!-- /.container-fluid -->
 <div class="container-fluid">
     <?php if(isset($_SESSION['success'])) : ?>
-        <div class="alert alert-success alert-dismissable"> 
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <?php echo $_SESSION['success']; unset($_SESSION['success']); ?> 
-        </div>
-    <?php endif; ?>
-    <?php if(isset($_SESSION['error'])) : ?>
-        <div class="alert alert-danger alert-dismissable"> 
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <?php echo $_SESSION['error']; unset($_SESSION['error']); ?> 
-        </div>
-     <?php endif; ?>
-     <div class="card-header py-3">
+                        <div class="alert alert-success alert-dismissable"> 
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <?php echo $_SESSION['success']; unset($_SESSION['success']); ?> 
+                        </div>
+                    <?php endif; ?>
+                    <?php if(isset($_SESSION['error'])) : ?>
+                        <div class="alert alert-danger alert-dismissable"> 
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <?php echo $_SESSION['error']; unset($_SESSION['error']); ?> 
+                        </div>
+                     <?php endif; ?>
+    <div class="card-header py-3">
        
         <div class="m-0 font-weight-bold text-primary">
-            <a href="add.php" class="btn btn-primary btn-user">Thêm nhân viên</a> 
+            <a href="add.php" class="btn btn-primary btn-user">Thêm sản phẩm</a> 
         </div>
 
     </div>
@@ -57,65 +63,46 @@
             <thead>
                 <tr>
                     <th>STT</th>
-                    <th>usersname</th>
-                    <th>name</th>
-                    <th>email</th>
-                    <th>phone</th>
-                    <th>address </th>
-                    <th>level</th>
-                    <th>status</th>
-                    <th>avatar</th>
+                    <th>Tên sách</th>
+                    <th>Giá sách</th>
+                    <th>Giảm giá</th>
+                    <th>Hình ảnh</th>
+                    <th>Số lượng</th>
+                    <th>Danh mục</th>
+                    <th>Tên tác giả</th>
+                    <th>Nhà xuất bản</th>
+                    <th>Công ty phát hành</th>
+                    <th>Kích thước</th>
+                    <th>Loại bìa</th>
+                    <th>Số trang</th>
+                    <th>SKU</th>
+                    <th>Video</th>
                     <th>Sửa</th>
                     <th>Xóa</th>
                     
                 </tr>
             </thead>
             <tbody>
-                <?php $stt=1; foreach ($admin as $item) : ?>
+                <?php $stt=1; foreach ($product as $item) : ?>
                 <tr>
                     <td><?php echo $stt  ?></td>
-                    <td ><?php echo $item['username'] ?></td>
-                    <td><?php echo $item['name'] ?></td>
-                    <td><?php echo $item['email'] ?></td>
-                    <td><?php echo $item['phone'] ?></td>
-                    <td><?php echo $item['address'] ?></td>
+                    <td ><?php echo $item['name'] ?></td>
+                    <td><?php echo $item['price'] ?></td>
+                    <td><?php echo $item['sale'] ?></td>
                     <td>
-                        <?php if($item['level'] == 0) :?>
-                            <a href="level.php?id= <?php echo $item['id'] ?> " class="btn btn-primary btn-outline">
-                            <span class="icon text-white-50">
-                                              <i class="fas fa-user"></i>
-                                            </span>
-                            <span class="text">user</span>
-                        </a>
-                        <?php else :?>
-                            <a href="level.php?id= <?php echo $item['id'] ?> "  class="btn btn-outline btn-danger">
-                            <span class="icon text-white-50">
-                                              <i class="fas fa-user"></i>
-                                            </span>
-                            <span class="text">admin</span>
-                        </a>
-                        <?php endif; ?>
+                        <img src="/BanSach/public/uploads/product/<?php echo $item['thunbar'] ?>" width="150px" height="200px">
                     </td>
-                    <td>
-                        <?php if($item['status'] == 0) :?>
-                            <a href="status.php?id= <?php echo $item['id'] ?> " class="btn btn-warning btn-outline">
-                            <span class="icon text-white-50">
-                                              <i class="fas fa-lock"></i>
-                                            </span>
-                            <span class="text">unlock</span>
-                        </a>
-                        <?php else :?>
-                            <a href="status.php?id= <?php echo $item['id'] ?> "  class="btn btn-info btn-outline">
-                            <span class="icon text-white-50">
-                                              <i class="fas fa-unlock"></i>
-                                            </span>
-                            <span class="text">lock</span>
-                        </a>
-                        <?php endif; ?>
-                    </td>
-                    <td>
-                        <img src="/BanSach/public/admin/img/<?php echo $item['avatar'] ?>" width="100px" height="100px">
-                    </td>
+                    <td><?php echo $item['soluong'] ?></td>
+                    <td><?php echo $item['namecate'] ?></td>
+                    <td><?php echo $item['nametacgia'] ?></td>
+                    <td><?php echo $item['namenxb'] ?></td>
+                    <td><?php echo $item['namecongty'] ?></td>
+
+                    <td><?php echo $item['kichthuoc'] ?></td>
+                    <td><?php echo $item['loaibia'] ?></td>
+                    <td><?php echo $item['sotrang'] ?></td>
+                    <td><?php echo $item['sku'] ?></td>
+                    <td><?php echo $item['video'] ?></td>
                     <td>
                          <a href="edit.php?id= <?php echo $item['id'] ?> " class="btn btn-info btn-icon-split">
                             <span class="icon text-white-50">
@@ -139,11 +126,13 @@
         </table>
         <div class="row">
             <div class="col-sm-12 col-md-6">
+                <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div>
             </div>
                     <div class="col-sm-12 col-md-4">
                         <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
                             <ul class="pagination">
-                                <li class="<?php echo ($i==$p) ? 'active' : '' ?>" ><a href="?page=<?php echo $i-1; ?>" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+
+                                <li class="<?php echo ($i==$p) ? 'active' : '' ?>" ><a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
                                 </li>
                                 <?php for( $i= 1; $i<=$sotrang; $i++) : ?>
                                 <?php
@@ -168,6 +157,9 @@
         </div>
     </div>
 </div>
+
+
 <!-- End of Main Content -->
+
 <!-- Footer -->
 <?php require_once ("../../layouts/footer.php"); ?>
