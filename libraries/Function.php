@@ -324,6 +324,139 @@ if (!function_exists('get_start_and_time'))
         ];
     }
 }
+function convertDate($time, $format = 'M d, Y') {
+    /**
+     * Asume the date is 2023-09-01 23:11:01 
+     * F = September ; Month as text 
+     * M  = Sep ; Month with 3 chars 
+     * m  = 08 ; Month with 3 chars 
+     * j = 1   : day without zero 
+     * d = 01   : day with zero 
+     * D = Fri  : day with 3 chars
+     * l = Friday  : day with text
+     * Y = 2023 : Year Full
+     * y = 23  : Year short
+     * H = 23  : time for 24 hours 
+     * h = 11  : time for 12 hours 
+     * i = 11  : minute  
+     * s = 01  : Second 
+     * 
+     */
+    // Convert the input time string to a DateTime object
+    $dateTime = new DateTime($time);
 
+    // Format the date according to the specified format
+    $formattedDate = $dateTime->format($format);
+
+    return $formattedDate;
+}
+if (!function_exists('upload_image'))
+{
+	/**
+	 * @param $file [tên file trùng tên input]
+	 * @param array $extend [ định dạng file có thể upload được]
+	 * @return array|int [ tham số trả về là 1 mảng - nếu lỗi trả về int ]
+	 */
+	function upload_image($file , $folder = '',array $extend  = array() )
+	{
+		$code = 1;
+		
+		// lay duong dan anh
+		$baseFilename = public_path() . '/uploads/' . $_FILES[$file]['name'];
+		
+		// thong tin file
+		$info = new SplFileInfo($baseFilename);
+		
+		// duoi file
+		$ext = strtolower($info->getExtension());
+		
+		// kiem tra dinh dang file
+		if ( ! $extend )
+		{
+			$extend = ['png','jpg','jpeg'];
+		}
+		
+		if( !in_array($ext,$extend))
+		{
+			return $data['code'] = 0;
+		}
+		
+		// Tên file mới
+		$nameFile = trim(str_replace('.'.$ext,'',strtolower($info->getFilename())));
+		$filename = date('Y-m-d__').str_slug($nameFile) . '.' . $ext;
+		
+		// thu muc goc de upload
+		$path = public_path().'/uploads/'.date('Y/m/d/');
+		if ($folder)
+		{
+			$path = public_path().'/uploads/'.$folder.'/'.date('Y/m/d/');
+		}
+		
+		if ( !File::exists($path))
+		{
+			mkdir($path,0777,true);
+		}
+		
+		// di chuyen file vao thu muc uploads
+		move_uploaded_file($_FILES[$file]['tmp_name'], $path. $filename);
+		
+		$data = [
+			'name'              => $filename,
+			'code'              => $code,
+			'path_img'          => 'uploads/'.$filename
+		];
+		
+		return $data;
+	}
+}
+function moveFileToImageDirectory($fileInputName, $imageDirectory) {
+    // Check if a file was uploaded
+    if (isset($_FILES[$fileInputName]) && $_FILES[$fileInputName]['error'] === UPLOAD_ERR_OK) {
+        $originalFileName = $_FILES[$fileInputName]['name'];
+        $tempFilePath = $_FILES[$fileInputName]['tmp_name'];
+
+        // Get the file extension
+        $fileExtension = pathinfo($originalFileName, PATHINFO_EXTENSION);
+
+        // Generate a unique name for the file
+        $newFileName = uniqid() . '.' . $fileExtension;
+
+        // Build the new path to move the file
+        $newFilePath = $imageDirectory . '/' . $newFileName;
+
+        // Move the file to the new location
+        if (move_uploaded_file($tempFilePath, $newFilePath)) {
+            // Return the new file path if the move was successful
+            return $newFilePath;
+        } else {
+            // Return an error message if the move failed
+            return 'Error moving file.';
+        }
+    } else {
+        // Return an error message if no file was uploaded or an error occurred
+        return 'No file uploaded or an error occurred.';
+    }
+}
+function moveMultipleFilesToDirectory($files, $targetDirectory) {
+    // Create the target directory if it doesn't exist
+    if (!file_exists($targetDirectory) && !is_dir($targetDirectory)) {
+        mkdir($targetDirectory, 0755, true);
+    }
+
+    $uploadedFileNames = [];
+
+    // Loop through each uploaded file
+    for ($i = 0; $i < count($files['name']); $i++) {
+        $fileName = $files['name'][$i];
+        $targetPath = $targetDirectory . $fileName;
+
+        // Move the file to the specified directory
+        if (move_uploaded_file($files['tmp_name'][$i], $targetPath)) {
+            $uploadedFileNames[] = $fileName;
+        }
+    }
+
+    return $uploadedFileNames;
+}
 
 ?>

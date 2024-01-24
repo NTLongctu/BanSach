@@ -4,7 +4,7 @@
 	require_once ("libraries/Function.php");
 	$db = new Database ;
 
-	define("ROOT",$_SERVER['DOCUMENT_ROOT']."/WebBanSach/public/uploads/");
+	define("ROOT",$_SERVER['DOCUMENT_ROOT']."/BanSach/public/uploads/");
 	$category = $db->fetchAll("category");
 
 	

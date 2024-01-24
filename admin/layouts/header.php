@@ -10,7 +10,8 @@
       $dem +=1;
     }
   }
-  $sql = "SELECT hd.*, users.name as nameuser, users.phone as phoneuser  FROM hd LEFT JOIN users ON users.id = hd.id_user ORDER BY ID DESC";
+  $sql = "SELECT hd.*, users.name as nameuser, users.phone as phoneuser  FROM hd 
+          LEFT JOIN users ON users.id = hd.id_user ORDER BY ID DESC";
   $hdcxy= $db->fetchsql($sql);
 
   $tonghomgopy = 0;
@@ -25,7 +26,8 @@
     }
   }
 
-  $sqlhomgopy = "SELECT homgopy.* ,users.name as nameuser,users.avatar as avataruser FROM homgopy LEFT JOIN  users ON users.id = homgopy.id_user ORDER BY ID DESC";
+  $sqlhomgopy = "SELECT homgopy.* ,users.name as nameuser,users.avatar as avataruser FROM homgopy 
+                LEFT JOIN  users ON users.id = homgopy.id_user ORDER BY ID DESC";
   $messagesss = $db->fetchsql($sqlhomgopy);
   $sqlthang1 = " SELECT MONTH(ngaylap) as thang ,tongtien FROM hd  ";
   $t = $db->fetchsql($sqlthang1);
@@ -55,11 +57,8 @@
           $t11+=$item['tongtien'];
       if($item['thang']== 12)
           $t12+=$item['tongtien'];
-
   }
   $datamonth = [$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$t10,$t11,$t12];
- 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

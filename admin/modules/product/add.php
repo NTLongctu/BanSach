@@ -17,6 +17,10 @@
         {
             $error['thunbar'] = "Bạn chưa chọn hình!";
         }
+        if(!isset($_FILES['file_input']))
+        {
+            $error['file_input'] = "Bạn chưa chọn hình!";
+        }
         if(postInput('soluong')=='')
         {
             $error['soluong'] = "Hãy nhập số lượng sách!";

@@ -4,7 +4,7 @@
 	require_once ("../../../libraries/Function.php");
 	$db = new Database ;
 
-	if(!isset($_SESSION['admin_id'])
+	if(! isset($_SESSION['admin_id'])
 	{
 		header("location: /BanSach/login/");
 	}

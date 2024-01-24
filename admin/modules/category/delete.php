@@ -8,7 +8,7 @@
         $_SESSION['error'] = " Dữ liệu không tồn tại !";
         redirectAdmin("category");
     }
-    $is_product = $db->fetchOne("product","category_id = $id");
+    $is_product = $db->fetchOne("product","category_id = $id")
     if($is_product == NULL)
     {
         $id_delete = $db->delete("category", $id);

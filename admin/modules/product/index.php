@@ -14,13 +14,35 @@
     $sqlcategory = "SELECT product.*,category.name as namecate, tacgia.name as nametacgia, nxb.name as namenxb,cotyphathanh.name as namecongty  FROM product
                     LEFT JOIN category on category.id = product.category_id LEFT JOIN tacgia on tacgia.id = product.id_tacgia LEFT JOIN nxb on nxb.id = product.id_nxb
                     LEFT JOIN cotyphathanh on cotyphathanh.id = product.id_cotyphathanh";
+    $categoryfetch = $db->fetchsql($sqlcategory);
 
-    $product = $db->fetchJone('product',$sqlcategory,$p,4,true);
-    if(isset($product['page']))
-    {
-        $sotrang= $product['page'];
-        unset($product['page']);
-    }
+    //pagination - start
+   //find RECORDS
+   $total_records = count($categoryfetch);
+   //find LIMIT and CURRENT_PAGE
+   $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+   $limit = 5;
+   // Calculate  TOTAL_PAGE and START
+   // TOTAL_PAGE
+   $total_page = ceil($total_records / $limit);
+
+   // Giới hạn current_page trong khoảng 1 đến total_page
+   if ($current_page > $total_page){
+      $current_page = $total_page;
+   }
+   else if ($current_page < 1){
+      $current_page = 1;
+   }
+   // Tìm Start
+   $start = ($current_page - 1) * $limit;
+   $sql = "SELECT  (@row_number:=@row_number + 1) AS row_num, product.*,category.name as namecate, tacgia.name as nametacgia, nxb.name as namenxb,cotyphathanh.name as namecongty  
+            FROM  (SELECT @row_number:=$start) AS init, product
+            LEFT JOIN category on category.id = product.category_id 
+            LEFT JOIN tacgia on tacgia.id = product.id_tacgia 
+            LEFT JOIN nxb on nxb.id = product.id_nxb
+            LEFT JOIN cotyphathanh on cotyphathanh.id = product.id_cotyphathanh LIMIT $start, $limit";
+   $product =$db->fetchsql($sql);
+   $product_records = count($product);
 ?>
 
 <!--header-->
@@ -85,7 +107,7 @@
             <tbody>
                 <?php $stt=1; foreach ($product as $item) : ?>
                 <tr>
-                    <td><?php echo $stt  ?></td>
+                    <td><?php echo $item['row_num']  ?></td>
                     <td ><?php echo $item['name'] ?></td>
                     <td><?php echo $item['price'] ?></td>
                     <td><?php echo $item['sale'] ?></td>
@@ -118,6 +140,21 @@
                                             </span>
                             <span class="text">Xóa</span>
                         </a>
+                        <?php if($item['active'] == 0) :?>
+                            <a href="status.php?id= <?php echo $item['id'] ?> " class="btn btn-warning btn-outline">
+                            <span class="icon text-white-50">
+                                              <i class="fas fa-lock"></i>
+                                            </span>
+                            <span class="text">inactive</span>
+                        </a>
+                        <?php else :?>
+                            <a href="status.php?id= <?php echo $item['id'] ?> "  class="btn btn-info btn-outline">
+                            <span class="icon text-white-50">
+                                              <i class="fas fa-unlock"></i>
+                                            </span>
+                            <span class="text">active</span>
+                        </a>
+                        <?php endif; ?>
                     </td>
 
                 </tr>
@@ -126,31 +163,26 @@
         </table>
         <div class="row">
             <div class="col-sm-12 col-md-6">
-                <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div>
+                <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">Showing <?php echo $start+1;?> to <?php echo $start+$product_records;?> of <?php echo $total_records;?> entries</div>
             </div>
                     <div class="col-sm-12 col-md-4">
                         <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
                             <ul class="pagination">
-
-                                <li class="<?php echo ($i==$p) ? 'active' : '' ?>" ><a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
-                                </li>
-                                <?php for( $i= 1; $i<=$sotrang; $i++) : ?>
-                                <?php
-                                    if(isset($_GET['page']))
-                                    {
-                                        $p=$_GET['page'];
-                                    } 
-                                    else
-                                    {
-                                        $p = 1;
-                                    }
-                                ?>
-                                <li class="<?php echo ($i==$p) ? 'active' : '' ?>">
-                                    <a href="?page=<?php echo $i; ?>" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link"><?php echo $i; ?></a>
-                                </li>
-                                <?php endfor; ?>
-                                <li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
-                                </li>
+                                <?php if ($current_page > 1 && $total_page > 1): ?>
+                                    <li class="paginate_button page-item previous" id="dataTable_previous"><a href="index.php?page=<?php echo $current_page-1;?>" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
+                                <?php endif; ?>
+                                <?php for($i = 1; $i <= $total_page; $i++):?>
+                                    <?php if ($i == $current_page): ?>
+                                        <li class="paginate_button page-item active"><a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link"><?php echo $i;?></a></li>
+                                    <?php else: ?>
+                                        <li class="paginate_button page-item "><a href="index.php?page=<?php echo $i;?>" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link"><?php echo $i;?></a></li>
+                                    <?php endif; ?>     
+                                <?php endfor; ?>   
+                                
+                                <?php if ($current_page < $total_page && $total_page > 1): ?>
+                                    <li class="paginate_button page-item next" id="dataTable_next"><a href="index.php?page=<?php echo $current_page+1;?>" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
+                                <?php endif; ?>
+                                
                             </ul>
                         </div>
                     </div>
