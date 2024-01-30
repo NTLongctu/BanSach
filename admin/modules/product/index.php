@@ -140,15 +140,15 @@
                                             </span>
                             <span class="text">Xóa</span>
                         </a>
-                        <?php if($item['active'] == 0) :?>
-                            <a href="status.php?id= <?php echo $item['id'] ?> " class="btn btn-warning btn-outline">
+                        <?php if($item['status'] == 0) :?>
+                            <a href="status.php?id= <?php echo $item['id'] ?> " class="btn btn-warning btn-icon-split mt-2">
                             <span class="icon text-white-50">
                                               <i class="fas fa-lock"></i>
                                             </span>
                             <span class="text">inactive</span>
                         </a>
                         <?php else :?>
-                            <a href="status.php?id= <?php echo $item['id'] ?> "  class="btn btn-info btn-outline">
+                            <a href="status.php?id= <?php echo $item['id'] ?> "  class="btn btn-info btn-icon-split mt-2">
                             <span class="icon text-white-50">
                                               <i class="fas fa-unlock"></i>
                                             </span>
