@@ -221,7 +221,7 @@
             
             return $data;
         }
-         public  function fetchJone($table,$sql ,$page = 0,$row ,$pagi = false )
+        public  function fetchJone($table,$sql ,$page = 0,$row ,$pagi = false )
         {
             
             $data = [];
@@ -280,6 +280,7 @@
             $tien = mysqli_fetch_assoc($result);
             return $tien;
         }
+        
     }
    
 ?>

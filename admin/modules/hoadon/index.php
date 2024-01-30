@@ -1,17 +1,15 @@
 <?php
     $open = "hd";
     require_once ("../../autoload/autoload.php");
-    if(isset($_GET['page']))
-    {
-        $p=$_GET['page'];
-    }
-    else
-    {
-        $p=1;
-    }
-    $sql = "SELECT hd.*, users.name as nameuser, users.phone as phoneuser  FROM hd LEFT JOIN users ON users.id = hd.id_user ORDER BY ID DESC";
 
-    $hoadon = $db->fetchJone('hd',$sql,$p,4,true);
+    $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+    $start = ($current_page - 1) * $limit=4;
+
+    $sql = "SELECT (@row_number:=@row_number + 1) AS row_num, hd.*, users.name as nameuser, users.phone as phoneuser  
+            FROM (SELECT @row_number:=$start) AS init, hd LEFT JOIN users ON users.id = hd.id_user ORDER BY ID DESC";
+
+    $hoadon = $db->fetchJone('hd',$sql,$current_page,$limit,true);
     if(isset($hoadon['page']))
     {
         $sotrang= $hoadon['page'];
@@ -61,7 +59,7 @@
                 <tbody>
                     <?php $stt=1; foreach ($hoadon as $item) : ?>
                     <tr>
-                        <td><?php echo $stt  ?></td>
+                        <td><?php echo $item['row_num']  ?></td>
                         <td ><?php echo $item['nameuser'] ?></td>
                         <td><?php echo $item['phoneuser'] ?></td>
                         <td><?php echo formatPrice($item['tongtien']) ?>đ</td>
@@ -121,25 +119,20 @@
                     <div class="col-sm-12 col-md-4">
                         <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
                             <ul class="pagination">
-                                <li class="<?php echo ($i==$p) ? 'active' : '' ?>" ><a href="?page=<?php echo $i-1; ?>" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
-                                </li>
-                                <?php for( $i= 1; $i<=$sotrang; $i++) : ?>
-                                <?php
-                                    if(isset($_GET['page']))
-                                    {
-                                        $p=$_GET['page'];
-                                    } 
-                                    else
-                                    {
-                                        $p = 1;
-                                    }
-                                ?>
-                                <li class="<?php echo ($i==$p) ? 'active' : '' ?>">
-                                    <a href="?page=<?php echo $i; ?>" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link"><?php echo $i; ?></a>
-                                </li>
-                                <?php endfor; ?>
-                                <li class="paginate_button page-item next" id="dataTable_next"><a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
-                                </li>
+                                <?php if ($current_page > 1 && $sotrang > 1): ?>
+                                    <li class="paginate_button page-item previous" id="dataTable_previous"><a href="?page=<?php echo $current_page-1;?>" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
+                                <?php endif; ?>
+                                <?php for($i = 1; $i <= $sotrang; $i++):?>
+                                    <?php if ($i == $current_page): ?>
+                                        <li class="paginate_button page-item active"><a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link"><?php echo $i;?></a></li>
+                                    <?php else: ?>
+                                        <li class="paginate_button page-item "><a href="?page=<?php echo $i;?>" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link"><?php echo $i;?></a></li>
+                                    <?php endif; ?>     
+                                <?php endfor; ?>   
+                                
+                                <?php if ($current_page < $sotrang && $sotrang > 1): ?>
+                                    <li class="paginate_button page-item next" id="dataTable_next"><a href="?page=<?php echo $current_page+1;?>" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
+                                <?php endif; ?>
                             </ul>
                         </div>
                     </div>

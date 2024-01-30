@@ -182,7 +182,6 @@
                                 <?php if ($current_page < $total_page && $total_page > 1): ?>
                                     <li class="paginate_button page-item next" id="dataTable_next"><a href="index.php?page=<?php echo $current_page+1;?>" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
                                 <?php endif; ?>
-                                
                             </ul>
                         </div>
                     </div>
