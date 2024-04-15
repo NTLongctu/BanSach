@@ -4,7 +4,7 @@
     //unset($_SESSION['cart']);
     $user = $db->fetchID("users",intval($_SESSION['name_id']));
     //data là mảng 2 chiều
-    /*if($_SERVER["REQUEST_METHOD"] == "POST")
+    if($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $error = [];
         if(postInput('name')=='')
@@ -27,7 +27,12 @@
         {
             $error['address'] = "Hãy nhập số điện thoại!";
         }
-    }*/
+        if(postInput('payment_method')=='')
+        {
+            $error['payment_method'] = "Hãy chọn hình thức thanh toán";
+        }
+    }
+    var_dump($_SESSION['tongtien']);
 ?>
         <!--ENDMENUNAV-->
         <div class="col-md-9 ">
@@ -110,11 +115,26 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-user ">Tiến thành đặt hàng</button>
+                        <label class="col-md-2 col-md-offset-1">Thanh toán:</label>
+                        <div class="col-md-8">
+                            <input type="radio" id="payment1" name="payment_method" value="cod">
+                            <label for="payment1">Thanh toán khi nhận hàng.</label>
+                            <input type="radio" id="payment2" name="payment_method" value="qr">
+                            <label for="payment2">Thanh toán qua QR.</label>
+                        </div>
                     </div>
 
-
-                    
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 col-md-offset-1"></label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 col-md-offset-1"></label>
+                        <div class="col-md-8">
+                            <button type="submit" class="btn btn-primary btn-user ">Tiến thành đặt hàng</button>
+                        </div>
+                        
+                    </div>
                 </form>
             </section>
 

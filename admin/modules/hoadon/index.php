@@ -1,7 +1,7 @@
 <?php
     $open = "hd";
     require_once ("../../autoload/autoload.php");
-
+    $payment = $db->fetchAll("payment");
     $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
 
     $start = ($current_page - 1) * $limit=4;
@@ -67,12 +67,28 @@
                         <td><?php echo $item['diachigiaohang']; ?></td>
                        
                         <td>
-                            <?php if($item['status'] == 0 ): ?>
-                                <a href="status.php?id= <?php echo $item['id'] ?> " class="btn btn-danger btn-icon-split">
+                            <?php $payment = $db->fetchOne("payment","id_hd = '".$item['id']."'");if($item['status']==0 && $payment['id_type']==1 && $payment['status']==0): ?>
+                                <a href="status.php?id= <?php echo $item['id'] ?> " class="btn btn-danger btn-icon-split disabled" disabled>
                                 <span class="icon text-white-50">
                                                   <i class="fas fa-info-circle"></i>
                                                 </span>
-                                <span class="text">Chờ xác nhận</span>
+                                <span class="text">Chờ khách thanh toán</span>
+                            </a>
+                            <?php endif; ?>
+                            <?php if($item['status']==0 && $payment['id_type']==1 && $payment['status']==1): ?>
+                                <a href="status.php?id= <?php echo $item['id'] ?>" class="btn btn-danger btn-icon-split" >
+                                <span class="icon text-white-50">
+                                                  <i class="fas fa-info-circle"></i>
+                                                </span>
+                                <span class="text">Xác nhận đơn hàng</span>
+                            </a>
+                            <?php endif; ?>
+                            <?php if($item['status'] == -1 ): ?>
+                                <a href="" class="btn btn-danger btn-icon-split disabled" disabled>
+                                <span class="icon text-white-50">
+                                                  <i class="fas fa-info-circle"></i>
+                                                </span>
+                                <span class="text">Đơn hàng đã hủy</span>
                             </a>
                             <?php endif; ?>
                             <?php if($item['status'] == 1  ): ?>
@@ -83,10 +99,11 @@
                                 <span class="text">Đang vận chuyển</span>
                             </a>
                             <?php endif; ?>
+
                             <?php if($item['status'] == 2  ): ?>
                                 <a href="status.php?id= <?php echo $item['id'] ?> " class="btn btn-info btn-icon-split">
                                 <span class="icon text-white-50">
-                                                  <i class="fas fa-gift"></i>
+                                                  <i class="fas fa-car"></i>
                                                 </span>
                                 <span class="text">Chờ giao hàng</span>
                             </a>

@@ -19,13 +19,17 @@
    
 ?>
                 <!--ENDMENUNAV-->
-
+        
 
         <div class="col-md-9 bor">
             <section id="slide" class="text-center">
                 <img src="public/frontend/images/slide/h5.jpg" class="img-thumbnail">
             </section>
-
+            <?php if(isset($_SESSION['success'])) : ?>
+                          <div class="alert alert-success alert-dismissable"> 
+                              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                      <?php echo $_SESSION['success']; unset($_SESSION['success']); ?></div>
+                      <?php endif; ?>
             <section class="box-main1">
                 <?php foreach ($data as $key => $value) :?>
                     <h3 class="title-main"><a><?php echo $key ?></a></h3>

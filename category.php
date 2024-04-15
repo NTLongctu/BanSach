@@ -23,7 +23,7 @@
                             <img src="public/frontend/images/slide/h5.jpg" class="img-thumbnail">
                         </section>
                         <section class="box-main1">
-                            <h3 class="title-main"><a href="category.php?id=<?php echo$product['category_id']; ?>"><?php echo $category["name"] ?></a> </h3>
+                            <h3 class="title-main"><a href="category.php?id=<?php echo $category['id'];?>"><?php echo $category["name"] ?></a> </h3>
                             
                             <div class="showitem clearfix">
                                 <?php foreach ($product as $item): ?>

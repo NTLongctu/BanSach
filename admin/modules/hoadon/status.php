@@ -22,7 +22,7 @@
         $status = 3;
     }
     $update = $db->update("hd",array("status" => $status),array("id" => $id));
-    if($update>0 && $status==2 )
+    if($update>0 && $status==2)
     {
         $_SESSION['success'] = "Cập nhật trạng thái thành công!";
         $sql = "SELECT * FROM cthd WHERE id_hd = $id ";

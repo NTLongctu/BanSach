@@ -2,6 +2,58 @@
   $open = "users";
   require_once ("autoload/autoload.php");
   $users = $db->fetchALL("users");
+
+  // Handle Facebook login callback
+  if (isset($_GET['code'])) {
+    $token = $_GET['code'];
+    $userInfo = getUserInfo($token);
+    if ($userInfo) {
+        // Store user data in session
+        $_SESSION['name_user'] = $userInfo['name'];
+        $_SESSION['name_id'] = $userInfo['id'];
+        $tmp_id = substr($_SESSION['name_id'], 0,7);
+        $is_check = $db->fetchID('users',$tmp_id);
+        if(!isset($is_check)){
+          $data =
+            [
+                "id" => $tmp_id,
+                "name" => $_SESSION['name_user']
+            ];
+            $id_insert = $db->insert("users",$data);
+            if(isset($id_insert)){
+              $_SESSION['success'] = "Successfully to retrieve user information from Facebook.";
+            }
+        }
+        echo "<script>alert('Đăng nhập thành công!');location.href='index.php'</script>";
+        exit;
+    } else {
+        $_SESSION['error'] = "Failed to retrieve user information from Facebook.";
+    }
+  }
+
+  // Function to retrieve user information from Facebook
+  function getUserInfo($code) {
+    $appId = '272521202582143';
+    $appSecret = '99330a26022468b6055cfd3305e268c8';
+    $redirectUri = urlencode('http://localhost/bansach/');
+    
+    // Exchange code for access token
+    $tokenUrl = "https://graph.facebook.com/v19.0/oauth/access_token?client_id=$appId&redirect_uri=$redirectUri&client_secret=$appSecret&code=$code";
+    //$accessToken = json_decode(file_get_contents($tokenUrl), true);
+    if(isset($code)){
+        $graphUrl = "https://graph.facebook.com/me?fields=id,name&access_token=" . $code;
+        $userInfo = json_decode(file_get_contents($graphUrl), true);
+        return $userInfo;
+    }
+    // if (isset($accessToken['access_token'])) {
+    //     // Get user data using access token
+    //     $graphUrl = "https://graph.facebook.com/me?fields=id,name&access_token=" . $accessToken['access_token'];
+    //     $userInfo = json_decode(file_get_contents($graphUrl), true);
+    //     return $userInfo;
+    // }
+    return null;
+  }
+
   if($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $error = [];
@@ -63,7 +115,6 @@
 </head>
 
 <body class="bg-gradient-primary">
-
     <div class="container">
 
       <!-- Outer Row -->
@@ -124,9 +175,9 @@
                       <a href="index.php" class="btn btn-google btn-user btn-block">
                         <i class="fab fa-google fa-fw"></i> Login with Google
                       </a>
-                      <a href="index.php" class="btn btn-facebook btn-user btn-block">
+                      <fb:login-button  class="btn btn-facebook btn-user btn-block" scope="public_profile,email" onlogin="checkLoginState();" >
                         <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                      </a>
+                      </fb:login-button>
                     </form>
                     <hr>
                     <div class="text-center">
@@ -164,6 +215,36 @@
 <script src="/BanSach/public/admin/js/demo/chart-area-demo.js"></script>
 <script src="/BanSach/public/admin/js/demo/chart-pie-demo.js"></script>
 <script type="text/javascript"></script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 </body>
 
 </html>
+
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId: '272521202582143',
+            cookie: true,
+            xfbml: true,
+            version: 'v19.0'
+        });
+    };
+
+    // Function to handle Facebook login button click
+    function checkLoginState() {
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });
+    }
+
+    // Function to handle Facebook login status change
+    function statusChangeCallback(response) {
+        if (response.status === 'connected') {
+            // User is logged in with Facebook, trigger login callback
+            window.location.href = 'login.php?code=' + response.authResponse.accessToken;
+        } else {
+            console.log('User is not logged in with Facebook.');
+        }
+    }
+</script>

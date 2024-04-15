@@ -154,6 +154,8 @@
             return mysqli_fetch_assoc($result);
         }
 
+        
+
         public function fetchOne($table , $query)
         {
             $sql  = "SELECT * FROM {$table} WHERE ";

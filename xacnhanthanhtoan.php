@@ -24,6 +24,12 @@
     {
         $_SESSION['error'] = "Hãy nhập số điện thoại!";
     }
+    //var_dump(getInput('payment_method'));
+    if (getInput('payment_method') == 'cod') {
+        $id_type = 0;
+    } elseif (getInput('payment_method') == 'qr') {
+        $id_type = 1;
+    }
     //_debug(getInput('phone'));
     if(isset($_SESSION['error']))
     {
@@ -57,8 +63,18 @@
                     ];
                     $idcthd = $db->insert("cthd",$data2);
                 }
+               
+                $data_payment=[
+                    "id_hd" => $idhd,
+                    "id_type" => $id_type,
+                    "status" => 0
+                ];
+                $idpayment = $db->insert("payment",$data_payment);
+                
+
                 echo "<script>alert('Lưu thông tin đơn hàng thành công!');location.href='index.php' </script>";
                 unset($_SESSION['cart']);
+
             }
            
         }
@@ -141,6 +157,27 @@
                         <div class="col-md-2">
                             <p><h5><?php echo formatPrice($_SESSION['tongtien']); ?>đ</h5></p>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <hr>
+                        <label class="col-md-2 col-md-offset-1">Hình thức thanh toán</label>
+                        <div class="col-md-3">
+                            <?php if(getInput('payment_method') == 'cod' ):?>
+                                <p><h5>Thanh toán khi nhận hàng.</h5></p>
+                            <?php else:?>
+                                <p><h5>Chuyển khoảng</h5></p>
+                            <?php endif; ?>
+                        </div>
+                        <div class="col-md-7">
+                            <?php if(getInput('payment_method') == 'cod' ):?>
+                                <p><h5>Vui lòng chuyẩn bị đủ số tiền khi nhận hàng nhé! </h5></p>
+                            <?php else:?>
+                                <p><h5>Vui lòng chuyển khoản, và xác nhận chuyển khoản trong đơn hàng trước khi chúng tôi gửi hàng cho bạn.
+                                    Chỉ khi bạn xác nhận đã chuyển khoản thì chúng tôi mới thực hiện các bước tiếp theo!
+                                </h5></p>
+                            <?php endif; ?>
+                        </div>
+                        
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-user ">Xác nhận đơn hàng</button>
