@@ -29,13 +29,17 @@
       {
         $donhangchogiao +=1;
       }
+      if($value['status']==-1)
+      {
+        $donhangdahuy +=1;
+      }
       if($value['status']==3)
       {
         $tongdoanhthu += $value['tongtien'];
         $donhangthanhcong +=1;
       }
     }
-    $datatrangthaidonhang =[$donhangchuaxuly,$donhangdangvanchuyen,$donhangchogiao,$donhangthanhcong];
+    $datatrangthaidonhang =[$donhangchuaxuly,$donhangdangvanchuyen,$donhangchogiao,$donhangthanhcong,$donhangdahuy];
 
     $sql = "SELECT hd.*, users.name as nameuser, users.phone as phoneuser  FROM hd LEFT JOIN users ON users.id = hd.id_user ORDER BY ID DESC";
     $hdcxy= $db->fetchsql($sql);
@@ -421,7 +425,7 @@ foreach ($t as $item) {
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                Doanh thu trong ngày</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $doanhthutrongngay; ?> vnđ</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?=formatPrice($doanhthutrongngay);?> vnđ</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -442,7 +446,7 @@ foreach ($t as $item) {
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                Tổng doanh thu</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo formatPrice($tongdoanhthu); ?> vnđ</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?=formatPrice($tongdoanhthu); ?> vnđ</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>

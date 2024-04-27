@@ -8,7 +8,8 @@
 	else
 	{
 		$is_check = $db->fetchOne("thich" , "users_id='".$_SESSION["name_id"]."' AND  id_product='".$id."'");
-		if(count($is_check)>0)
+		var_dump($is_check);
+		if(!empty($is_check))
 		{
 			echo "<script>alert('Sản phẩm đã có trong danh sách yêu thích!');location.href='index.php' </script>";
 		}

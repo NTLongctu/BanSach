@@ -78,7 +78,7 @@
             <div class="container">
                 <div class="row" id="header-main">
                     <div class="col-md-5">
-                        <form class="form-inline">
+                        <form class="form-inline" action="search.php" method="GET" >
                             <div class="form-group">
                                 <input type="text" name="keywork" placeholder=" input keywork" class="form-control">
                                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i>

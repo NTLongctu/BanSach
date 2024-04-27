@@ -52,41 +52,41 @@
 <script src="/BanSach/public/admin/vendor/chart.js/Chart.min.js"></script>
 
 <!-- Page level custom scripts -->
-<!--<script src="/BanSach/public/admin/js/demo/chart-area-demo.js"></script>-->
-<!--<script src="/BanSach/public/admin/js/demo/chart-pie-demo.js"></script>-->
+<!-- <script src="/BanSach/public/admin/js/demo/chart-area-demo.js"></script>
+<script src="/BanSach/public/admin/js/demo/chart-pie-demo.js"></script> -->
 <?php 
-    /*$sqlthang1 = " SELECT MONTH(ngaylap) as thang ,tongtien FROM hd  ";
-    $t = $db->fetchsql($sqlthang1);
-    $t1=0;$t2=0;$t3=0;$t4=0;$t5=0;$t6=0;$t7=0;$t8=0;$t9=0;$t10=0;$t11=0;$t12=0;
-    _debug($t);
-    foreach ($t as $item) {
-        if($item['thang']== 1)
-            $t1+=$item['tongtien'];
-        if($item['thang']== 2)
-            $t2+=$item['tongtien'];
-        if($item['thang']== 3)
-            $t3+=$item['tongtien'];
-        if($item['thang']== 4)
-            $t4+=$item['tongtien'];
-        if($item['thang']== 5)
-            $t4+=$item['tongtien'];
-        if($item['thang']== 6)
-            $t6+=$item['tongtien'];
-        if($item['thang']== 7)
-            $t7+=$item['tongtien'];
-        if($item['thang']== 8)
-            $t8+=$item['tongtien'];
-        if($item['thang']== 9)
-            $t9+=$item['tongtien'];
-        if($item['thang']== 10)
-            $t10+=$item['tongtien'];
-        if($item['thang']== 11)
-            $t11+=$item['tongtien'];
-        if($item['thang']== 12)
-            $t12+=$item['tongtien'];
-    }
-    $datamonth = [$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$t10,$t11,$t12];
-    _debug($datamonth); */
+    // $sqlthang1 = " SELECT MONTH(ngaylap) as thang ,tongtien FROM hd  ";
+    // $t = $db->fetchsql($sqlthang1);
+    // $t1=0;$t2=0;$t3=0;$t4=0;$t5=0;$t6=0;$t7=0;$t8=0;$t9=0;$t10=0;$t11=0;$t12=0;
+    // _debug($t);
+    // foreach ($t as $item) {
+    //     if($item['thang']== 1)
+    //         $t1+=$item['tongtien'];
+    //     if($item['thang']== 2)
+    //         $t2+=$item['tongtien'];
+    //     if($item['thang']== 3)
+    //         $t3+=$item['tongtien'];
+    //     if($item['thang']== 4)
+    //         $t4+=$item['tongtien'];
+    //     if($item['thang']== 5)
+    //         $t4+=$item['tongtien'];
+    //     if($item['thang']== 6)
+    //         $t6+=$item['tongtien'];
+    //     if($item['thang']== 7)
+    //         $t7+=$item['tongtien'];
+    //     if($item['thang']== 8)
+    //         $t8+=$item['tongtien'];
+    //     if($item['thang']== 9)
+    //         $t9+=$item['tongtien'];
+    //     if($item['thang']== 10)
+    //         $t10+=$item['tongtien'];
+    //     if($item['thang']== 11)
+    //         $t11+=$item['tongtien'];
+    //     if($item['thang']== 12)
+    //         $t12+=$item['tongtien'];
+    // }
+    // $datamonth = [$t1,$t2,$t3,$t4,$t5,$t6,$t7,$t8,$t9,$t10,$t11,$t12];
+    //_debug($datamonth);
 
 ?>
 <script type="text/javascript">
@@ -124,12 +124,12 @@
         var myPieChart = new Chart(ctx, {
           type: 'doughnut',
           data: {
-            labels: ["Chờ xác nhận", "Chờ vận chuyển", "Chờ giao hàng","Giao thành công"],
+            labels: ["Chờ xác nhận", "Chờ vận chuyển", "Chờ giao hàng","Giao thành công","Đơn hàng đã hủy"],
             datasets: [{
               data: $datastatus,
-              backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc','#00CC33'],
-              hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf','#009933'],
-              hoverBorderColor: "rgba(234, 236, 244, 1)",
+              backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc','#00CC33','#e74a3b'],
+              hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf','#009933','#e75a3b'],
+              hoverBorderColor: "rgba(234, 236, 244, 1)"
             }],
           },
           options: {
@@ -142,7 +142,7 @@
               xPadding: 15,
               yPadding: 15,
               displayColors: false,
-              caretPadding: 10,
+              caretPadding: 10
             },
             legend: {
               display: false

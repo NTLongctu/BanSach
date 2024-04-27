@@ -75,7 +75,7 @@
                                 <span class="text">Chờ khách thanh toán</span>
                             </a>
                             <?php endif; ?>
-                            <?php if($item['status']==0 && $payment['id_type']==1 && $payment['status']==1): ?>
+                            <?php if(($item['status']==0 && $payment['id_type']==1 && $payment['status']==1)||($item['status']==0 && $payment['id_type']==0 && $payment['status']==0)): ?>
                                 <a href="status.php?id= <?php echo $item['id'] ?>" class="btn btn-danger btn-icon-split" >
                                 <span class="icon text-white-50">
                                                   <i class="fas fa-info-circle"></i>

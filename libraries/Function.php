@@ -459,4 +459,5 @@ function moveMultipleFilesToDirectory($files, $targetDirectory) {
     return $uploadedFileNames;
 }
 
+
 ?>

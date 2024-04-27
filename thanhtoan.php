@@ -119,7 +119,7 @@
                         <div class="col-md-8">
                             <input type="radio" id="payment1" name="payment_method" value="cod">
                             <label for="payment1">Thanh toán khi nhận hàng.</label>
-                            <input type="radio" id="payment2" name="payment_method" value="qr">
+                            <input type="radio" id="payment2" name="payment_method" value="qr" checked>
                             <label for="payment2">Thanh toán qua QR.</label>
                         </div>
                     </div>
