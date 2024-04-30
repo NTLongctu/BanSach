@@ -2,8 +2,6 @@
 <?php 
     require_once("layouts/header.php"); 
     //unset($_SESSION['cart']);
-    
-    
 
     $sqlcategoryhome = "SELECT * FROM category ";
     $categoryHome = $db->fetchsql($sqlcategoryhome);

@@ -32,7 +32,7 @@
             $error['payment_method'] = "Hãy chọn hình thức thanh toán";
         }
     }
-    var_dump($_SESSION['tongtien']);
+
 ?>
         <!--ENDMENUNAV-->
         <div class="col-md-9 ">

@@ -2,7 +2,6 @@
     $open = "product";
     require_once ("../../autoload/autoload.php");
     $product = $db->fetchALL("product");
-
     if(isset($_GET['page']))
     {
         $p=$_GET['page'];
@@ -11,7 +10,7 @@
     {
         $p=1;
     }
-    $sqlcategory = "SELECT product.*,category.name as namecate, tacgia.name as nametacgia, nxb.name as namenxb,cotyphathanh.name as namecongty  FROM product
+    $sqlcategory = "SELECT product.*,category.name as namecate, tacgia.name as nametacgia, nxb.name as namenxb,cotyphathanh.name as namecongty FROM product
                     LEFT JOIN category on category.id = product.category_id LEFT JOIN tacgia on tacgia.id = product.id_tacgia LEFT JOIN nxb on nxb.id = product.id_nxb
                     LEFT JOIN cotyphathanh on cotyphathanh.id = product.id_cotyphathanh";
     $categoryfetch = $db->fetchsql($sqlcategory);
@@ -41,7 +40,7 @@
             LEFT JOIN tacgia on tacgia.id = product.id_tacgia 
             LEFT JOIN nxb on nxb.id = product.id_nxb
             LEFT JOIN cotyphathanh on cotyphathanh.id = product.id_cotyphathanh LIMIT $start, $limit";
-   $product =$db->fetchsql($sql);
+    $product =$db->fetchsql($sql);
    $product_records = count($product);
 ?>
 

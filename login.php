@@ -12,6 +12,7 @@
         $_SESSION['name_user'] = $userInfo['name'];
         $_SESSION['name_id'] = $userInfo['id'];
         $tmp_id = substr($_SESSION['name_id'], 0,7);
+        $_SESSION['name_id'] = $tmp_id;
         $is_check = $db->fetchID('users',$tmp_id);
         if(!isset($is_check)){
           $data =
