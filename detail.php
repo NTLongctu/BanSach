@@ -14,7 +14,7 @@
     $nxb = $db->fetchID("nxb",$product['id_nxb']);
     $tangview = intval($product['view'])+1;
     $updateview = $db->update("product",array("view" => $tangview),array("id" => $id));
-    
+
     if(isset($_SESSION['name_id'])){
         $sql = "SELECT * FROM `hd` left join cthd on hd.id = cthd.id_hd WHERE hd.id_user = $user_id and cthd.id_product =$id";
         $total = count($db->fetchsql($sql));
@@ -178,21 +178,21 @@
                                                 <?php endif; ?>
                                             </div>
                                             <div class="form-group"> 
-                                                <button type="submit" class="btn btn-primary" >Comment</button>
+                                                <button type="submit" class="btn btn-primary" >Post comment</button>
                                             </div>
                                         </form>
                                         <?php endif; ?>
                                         <div id="comment">
                                             <h3>tất cả nhận xét</h3>
                                             <?php foreach($nhanxet as $item): ?>
-                                            <div class="card shadow mb-4">
+                                            <div class="media border p-3">
                                                 <div class="card-header py-3">
                                                     <?php $Getuser = $db->fetchID("users",$item['id_user']);?>
                                                     <h4 class="m-2 p-2 font-weight-bold text-primary"><?= $Getuser['name'] ?></h4>
                                                 </div>
                                                 <div class="card-body mb-0">
                                                     <p class="mb-0">
-                                                    <span><i class="icon-calendar mr-2"><?php echo convertDate($item['thoigian']) ?></i></span>
+                                                    <span><i class="icon-calendar mr-2">Posted on <?php echo convertDate($item['thoigian']) ?></i></span>
                                                     </p>
                                                     <p class="mb-0 mt-2"><?php echo $item['noidung'] ?></p>
                                                 </div>

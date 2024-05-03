@@ -72,8 +72,9 @@
           $t3+=$item['tongtien'];
       if($item['thang']== 4 && $item['status']== 3)
           $t4+=$item['tongtien'];
+
       if($item['thang']== 5 && $item['status']== 3)
-          $t4+=$item['tongtien'];
+          $t5+=$item['tongtien'];
       if($item['thang']== 6 && $item['status']== 3)
           $t6+=$item['tongtien'];
       if($item['thang']== 7 && $item['status']== 3)
@@ -99,7 +100,7 @@ $getday = date('d');
 $getmonth= date('m');
 $doanhthutrongngay = 0;
 foreach ($t as $item) {
-  if($item['thang']==$getmonth  && $item['dayngay']== $getday)
+  if($item['thang']==$getmonth  && $item['dayngay']== $getday && $item['status']== 3 )
     $doanhthutrongngay += $item['tongtien'];
 }
 
@@ -422,7 +423,7 @@ foreach ($t as $item) {
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                Doanh thu trong ngày</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $doanhthutrongngay; ?> vnđ</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo formatPrice($doanhthutrongngay); ?> vnđ</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
