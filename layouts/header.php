@@ -22,7 +22,9 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>public/frontend/css/slick-theme.css">
     <!--slide-->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>public/frontend/css/style.css">
-    
+    <!-- Place the first <script> tag in your HTML's <head> -->
+    <script src="https://cdn.tiny.cloud/1/ac0fwwob5jr0eo96d57sp6p25rjejgt31fgcph8h4p4lpo7c/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
 
 
 

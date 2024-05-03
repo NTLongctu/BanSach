@@ -17,10 +17,7 @@
         {
             $error['thunbar'] = "Bạn chưa chọn hình!";
         }
-        if(!isset($_FILES['file_input']))
-        {
-            $error['file_input'] = "Bạn chưa chọn hình!";
-        }
+        
         if(postInput('soluong')=='')
         {
             $error['soluong'] = "Hãy nhập số lượng sách!";
@@ -70,6 +67,7 @@
         $tg = ["name" => postInput('id_tacgia')];//ten phía dưới
         $nxb = ["name" => postInput('id_nhaxuatban')];
         $cy = ["name" => postInput('id_Congtyohathanh')];
+        var_dump($error);
         if(empty($error))
         {
             $kttacgia = $db -> fetchOne("tacgia","name = '".postInput('id_tacgia')."'");
@@ -89,8 +87,6 @@
             $ktnxb = $db -> fetchOne("nxb","name = '".postInput('id_nhaxuatban')."'");
             $id_nhaxuatban = layid($ktnxb);
 
-
-
             $ktcongty = $db -> fetchOne("cotyphathanh","name = '".postInput('id_Congtyohathanh')."'");
             if(empty($ktcongty))
             {
@@ -98,7 +94,7 @@
             }
             $ktcongty = $db -> fetchOne("cotyphathanh","name = '".postInput('id_Congtyohathanh')."'");
             $id_Congtyohathanh = layid($ktcongty);
-
+            var_dump($id_Congtyohathanh);
             $data =
             [
                 "name" => postInput('name'),
@@ -143,7 +139,6 @@
             {
                 $_SESSION['error'] = "Thêm mới thất bại! ";
                 redirectAdmin("product");
-
             }
 
 

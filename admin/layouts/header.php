@@ -79,6 +79,8 @@
 
   <!-- Custom styles for this template-->
   <link href="/BanSach/public/admin/css/sb-admin-2.min.css" rel="stylesheet">
+  <!-- Place the first <script> tag in your HTML's <head> -->
+  <script src="https://cdn.tiny.cloud/1/ac0fwwob5jr0eo96d57sp6p25rjejgt31fgcph8h4p4lpo7c/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 
 </head>
 

@@ -14,6 +14,7 @@
     $nxb = $db->fetchID("nxb",$product['id_nxb']);
     $tangview = intval($product['view'])+1;
     $updateview = $db->update("product",array("view" => $tangview),array("id" => $id));
+    
     if(isset($_SESSION['name_id'])){
         $sql = "SELECT * FROM `hd` left join cthd on hd.id = cthd.id_hd WHERE hd.id_user = $user_id and cthd.id_product =$id";
         $total = count($db->fetchsql($sql));

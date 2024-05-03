@@ -50,7 +50,14 @@
 
 <!-- Page level plugins -->
 <script src="/BanSach/public/admin/vendor/chart.js/Chart.min.js"></script>
-
+<!-- Place the following <script> and <textarea> tags your HTML's <body> -->
+<script>
+  tinymce.init({
+    selector: 'textarea',
+    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+  });
+</script>
 <!-- Page level custom scripts -->
 <!-- <script src="/BanSach/public/admin/js/demo/chart-area-demo.js"></script>
 <script src="/BanSach/public/admin/js/demo/chart-pie-demo.js"></script> -->

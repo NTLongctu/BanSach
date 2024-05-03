@@ -9,7 +9,7 @@
     $cateid='';
     foreach ($categoryHome as $item) {
         $cateid = intval($item['id']);
-        $sql = "SELECT * FROM product WHERE category_id = $cateid ORDER BY ID DESC";
+        $sql = "SELECT * FROM product WHERE category_id = $cateid AND status = 0 ORDER BY ID DESC";
         $productHome = $db->fetchsql($sql);
         $data[$item['name']] = $productHome;
     }

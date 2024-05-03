@@ -18,7 +18,7 @@
         {
             $isset = $db -> fetchOne("category","name = '".$data['name']."'");
 
-            if(count($isset)>0)
+            if(isset($isset))
             {
                 $_SESSION['error'] = "Thêm thất bại tên danh mục đã tồn tại!  ";
             }

@@ -134,7 +134,7 @@
                                     <!-- Modal body -->
                                     <div class="modal-body">
                                     
-                                        <img src="https://img.vietqr.io/image/VCB-1015102684-compact2.png?amount=<?=$item['tongtien']?>&addInfo=ThanhToanHD<?=$item['id']?>&accountName=Nguyễn Thành Long" alt="">
+                                        <img src="https://img.vietqr.io/image/VCB-1015102684-compact2.png?amount=<?=$item['tongtien']?>&addInfo=ThanhToan-HD-<?=$item['id']?>&accountName=Nguyễn Thành Long" alt="">
                                     
                                     </div>
                                     
