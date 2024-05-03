@@ -11,7 +11,7 @@
     }
     $sql = "SELECT admin.* FROM admin";
 
-    $admin = $db->fetchJone('admin',$sql,$p,2,true);
+    $admin = $db->fetchJone('admin',$sql,$p,4,true);
     if(isset($admin['page']))
     {
         $sotrang= $admin['page'];
